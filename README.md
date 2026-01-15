@@ -80,7 +80,3 @@ WebStack 有非常多的魔改版本，这是其中一个。如果你对本主�
 如果你觉得本项目对你有所帮助，欢迎请作者喝杯热咖啡 >.<
 
 ![donate-wecaht-aliapy](https://kg.weiyan.cc/0000/img/donate.webp)
-
-### Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=shenweiyan/WebStack-Hugo&type=Date)](https://star-history.com/#shenweiyan/WebStack-Hugo&Date)

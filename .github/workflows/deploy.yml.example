@@ -1,0 +1,78 @@
+# GitHub Actions 自动部署示例配置 (可选)
+# 
+# ⚠️ 注意: 如果你的项目已经有 .github/workflows/hugo.yml,无需使用此文件
+# 
+# 此文件仅作为参考示例,展示如何可选地集成 Python 脚本
+# 
+# 使用方法 (仅当需要时):
+# 1. 将此文件复制为 .github/workflows/deploy.yml (仅在替换现有配置时)
+# 2. 根据你的仓库配置修改相关参数
+# 
+# 重要: Python 脚本是可选的,此配置默认不运行 Python 脚本
+# 如果你需要自动抓取 logo,可以取消注释相关步骤
+
+name: Deploy Hugo Site
+
+on:
+  push:
+    branches:
+      - main  # 或 master, 根据你的主分支名称
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      # ============================================
+      # 可选: 自动抓取网站 Logo (如果启用)
+      # ============================================
+      # 如果你在 config.toml 中启用了 autoFetchLogos = true
+      # 并且想在部署前自动抓取 logo,可以取消下面的注释
+      #
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'
+      #
+      # - name: Install Python dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r scripts/requirements.txt
+      #
+      # - name: Fetch missing logos
+      #   run: python scripts/fetch_logos.py
+      #
+      # - name: Commit logo changes
+      #   run: |
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git add data/webstack.yml static/assets/images/logos/
+      #     git diff --staged --quiet || git commit -m "Auto-fetch logos [skip ci]"
+      #     git push
+      #
+      # ============================================
+      # 以下步骤是 Hugo 构建和部署必需的
+      # ============================================
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo site
+        run: hugo --minify
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'  # 或 master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

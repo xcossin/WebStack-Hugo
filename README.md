@@ -55,6 +55,19 @@
 
 WebStack 有非常多的魔改版本，这是其中一个。如果你对本主题进行了一些个性化调整，欢迎在本项目留下你的 [分享](https://github.com/shenweiyan/WebStack-Hugo/issues/10)！
 
+#### 📦 关于 Python 脚本 (可选工具)
+
+项目中包含一个可选的 Python 脚本 (`scripts/fetch_logos.py`) 用于自动抓取网站 Logo。
+
+**重要说明**:
+- ✅ **不影响部署**: Python 脚本是可选的辅助工具,不影响 Hugo 构建和 GitHub Actions 自动部署
+- ✅ **无需 Python**: 如果你不使用自动抓取功能,完全不需要安装 Python
+- ✅ **可手动添加**: Logo 文件可以手动下载并放到 `static/assets/images/logos/` 目录
+
+更多信息请查看:
+- [自动抓取 Logo 工具说明](scripts/README.md)
+- [部署说明](DEPLOYMENT.md)
+
 
 ### 安装说明
 
